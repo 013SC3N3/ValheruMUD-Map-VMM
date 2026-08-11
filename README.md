@@ -86,6 +86,33 @@ you, because that's a play decision and not a mapping one.
 map core to track NPCs, mobs, vitals, or door handling for your own use. The map data and the
 package scripts are both open — see the license below.
 
+## Important: this depends on server room IDs
+
+**Read this before reporting a bug.** The packages find you by asking the server which room you
+are in, over GMCP. Every room here is keyed to the unique room ID the server reports, stored as
+that room's hash in Mudlet. If an ID stops matching, the lookup fails.
+
+From Nove, on how the IDs behave:
+
+> the room IDs are stable for what they represent, if someone goes and renames everything in
+> zone files they'll change but that's because then it's a new unit. It's keyed to the mud so
+> VS will have a different ID on heru than the test mud etc
+
+In practice that means:
+
+- **The IDs are stable in normal operation.** A room keeps its ID for as long as it stays the
+  same unit. Ordinary server restarts, updates and reboots do not disturb them.
+- **A rebuilt or renamed zone produces new IDs.** Those rooms then have to be remapped. This is
+  a server-side change and is entirely outside this project's control.
+- **IDs are specific to the server instance.** The same room has a different ID on live
+  ValheruMUD than on a test MUD, so the packages will not track you correctly anywhere except
+  the live server they were mapped against.
+
+**How the failure looks:** it is silent. There is no error message. The map simply stops
+following you into affected rooms, and speedwalks that target them will not work. If the map
+suddenly stops tracking you in one area while the rest of the world still works, a zone rebuild
+is the most likely explanation — please report it so that zone can be remapped.
+
 ## How it's built
 
 There is no hand-written HTML here. [Delwing/mudlet-map-page](https://github.com/Delwing/mudlet-map-page)
@@ -103,11 +130,20 @@ repository stays small. The map inside VMM.mpackage is the same `maps/VMM.dat` t
 Those default settings are not build options — the viewer keeps them in `localStorage` — so the
 script injects them before the viewer loads, filling in only what a visitor hasn't already set.
 
-## Author & License
+## Credits
 
-Map data, configuration, package scripts and site config: **O13SC3N3 (Shinra)**. Please credit if
-you reuse or redistribute. Licensed MIT — see [LICENSE](LICENSE).
+**Nove** and **Vega** — for implementing GMCP on ValheruMUD and exposing unique room IDs
+through it. This project simply would not exist without that work: every room here is keyed to
+a server-provided ID, and there was no way to build any of this before those IDs were
+available. Thank you both.
+
+Map data, configuration, package scripts and site config: **O13SC3N3 (Shinra)** —
+[github.com/013SC3N3](https://github.com/013SC3N3). Please credit if you reuse or redistribute.
 
 Built with [mudlet-map-page](https://github.com/Delwing/mudlet-map-page) and
 [mudlet-map-browser-script](https://github.com/Delwing/mudlet-map-browser-script), both MIT
 licensed by Piotr Wilczynski (Delwing).
+
+## License
+
+Licensed MIT — see [LICENSE](LICENSE).
