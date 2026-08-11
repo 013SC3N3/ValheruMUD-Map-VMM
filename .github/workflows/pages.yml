@@ -1,0 +1,27 @@
+# ValheruMUD Map (VMM) — build + deploy workflow
+# Author: O13SC3N3 (Shinra) — https://github.com/013SC3N3
+name: Map
+
+# Rebuild + redeploy on push to main, or manually via Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Required for the reusable workflow's Pages OIDC deploy.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  pages:
+    uses: Delwing/mudlet-map-page/.github/workflows/deploy-pages.yml@v1
+    with:
+      map-file: maps/VMM.dat
+      title: ValheruMUD Map
+      # Seeds default viewer settings for new visitors.
+      html-transform: scripts/default-settings.mjs
+      credits-author: O13SC3N3 (Shinra)
+      credits-github-url: https://github.com/013SC3N3
+      credits-remark: "v1.0.1 &middot; MIT licensed &middot; built with mudlet-map-page"
