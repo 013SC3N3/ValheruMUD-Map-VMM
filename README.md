@@ -113,6 +113,34 @@ following you into affected rooms, and speedwalks that target them will not work
 suddenly stops tracking you in one area while the rest of the world still works, a zone rebuild
 is the most likely explanation — please report it so that zone can be remapped.
 
+## If you embed the map in your own dock or panel
+
+Some UI setups put the map inside a dock, panel or custom layout — a `Geyser.Mapper` — rather
+than using Mudlet's own **Map** button. That works, but there is a trap worth knowing about
+before you build around it.
+
+**Mudlet has exactly one mapper.** The docked map widget and an embedded panel map are the same
+underlying object, not two views of it. They cannot both hold it.
+
+**Opening Mudlet's native map window takes the mapper away from your embedded panel, and does
+not give it back.** Closing the native map window does not release it either — closing only
+hides it. Your panel map stays blank for the rest of the session.
+
+**Recovering it takes a full profile restart.** Reloading your UI does not help. Geyser's own
+repositioning simply asks for the mapper again, that request is refused, and Geyser does not
+check the answer — so nothing errors, nothing logs, and the panel just stays empty. It looks
+like your UI broke when in fact the mapper was taken.
+
+`createMapView()` is not a way around this: it opens a new floating window each time it is
+called and cannot be docked.
+
+**Practical advice: pick one and stay with it.** Either use Mudlet's native map widget, or an
+embedded map in your own layout — but don't switch between them mid-session. If your panel map
+has already gone blank, restart the profile.
+
+None of this is specific to VMM; it is how Mudlet's mapper behaves with any map. It is called
+out here because a blank panel is easy to mistake for a broken map package.
+
 ## How it's built
 
 There is no hand-written HTML here. [Delwing/mudlet-map-page](https://github.com/Delwing/mudlet-map-page)
