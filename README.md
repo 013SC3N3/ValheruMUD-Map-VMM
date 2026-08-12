@@ -5,7 +5,7 @@ client.
 
 **Live map: https://013sc3n3.github.io/ValheruMUD-Map-VMM/**
 
-**v1.0.1** · Author: **O13SC3N3 (Shinra)** — [github.com/013SC3N3](https://github.com/013SC3N3)
+**v1.0.2** · Author: **O13SC3N3 (Shinra)** — [github.com/013SC3N3](https://github.com/013SC3N3)
 
 ## What this is for
 

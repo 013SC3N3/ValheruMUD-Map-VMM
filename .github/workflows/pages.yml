@@ -24,4 +24,4 @@ jobs:
       html-transform: scripts/default-settings.mjs
       credits-author: O13SC3N3 (Shinra)
       credits-github-url: https://github.com/013SC3N3
-      credits-remark: "v1.0.1 &middot; MIT licensed &middot; built with mudlet-map-page"
+      credits-remark: "v1.0.2 &middot; MIT licensed &middot; built with mudlet-map-page"
